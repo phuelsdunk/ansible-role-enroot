@@ -1,14 +1,4 @@
 ---
-- name: install gpg key for epel repository
-  rpm_key:
-    key: "{{ epel_gpg_key }}"
-    state: present
-
-- name: install epel repository
-  yum:
-    name: "{{ epel_package }}"
-    state: present
-
 - name: install enroot dependency packages
   yum:
     name: "{{ item }}"
@@ -18,14 +8,6 @@
   - "parallel"
   - "pigz"
   - "zstd"
-
-- name: set up yum repository (if defined)
-  yum_repository:
-    name: enroot
-    description: enroot
-    baseurl: "{{ enroot_rhel_repo }}"
-    gpgkey: "{{ enroot_rhel_repo_gpgkey }}"
-  when: enroot_rhel_repo is defined
 
 - name: install packages from repo (if defined)
   yum:
